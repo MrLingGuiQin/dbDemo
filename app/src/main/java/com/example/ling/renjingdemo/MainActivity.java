@@ -3,6 +3,7 @@ package com.example.ling.renjingdemo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -34,26 +35,31 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void queryData() {
-        DBHelper.queryRecord(this, new IGlobalCallback<List<List<StepRecord>>>() {
-            @Override
-            public void executeCallback(@Nullable List<List<StepRecord>> lists) {
-                mAdapterList.clear();
-                for (List<StepRecord> records : lists) {
-                    // 2018-08-12 08:00:00 ---> 2018-08-12
-                    final String date = DateUtil.getTimeString(records.get(0).getTime());
-                    mAdapterList.add(new RecordTime(date));
-                    mAdapterList.addAll(records);
-                }
-                mAdapter.notifyDataSetChanged();
-            }
-        });
+
+        DBHelper.queryRecord(this,
+                new IGlobalCallback<List<List<StepRecord>>>() {
+                    @Override
+                    public void executeCallback(@Nullable List<List<StepRecord>> lists) {
+                        mAdapterList.clear();
+
+                        for (List<StepRecord> records : lists) {
+                            // 2018-08-12 08:00:00 ---> 2018-08-12
+                            final String date = DateUtil.getYearMonDayString(records.get(0).getTime());
+                            mAdapterList.add(new RecordTime(date));
+                            mAdapterList.addAll(records);
+                        }
+                        mAdapter.notifyDataSetChanged();
+                    }
+                });
     }
 
 
     public void addClick(View view) {
 
         // 创建需要插入的数据
-        StepRecord stepRecord1 = new StepRecord(null, "2018-08-12 08:00:00", "止血操作");
+        StepRecord stepRecord1 = new StepRecord(null, DateUtil.getDateString(), "止血操作");
+
+//        StepRecord stepRecord1 = new StepRecord(null, "2018-08-12 08:00:00", "止血操作");
         StepRecord stepRecord2 = new StepRecord(null, "2018-08-12 10:00:02", "包扎操作");
         StepRecord stepRecord3 = new StepRecord(null, "2018-08-12 09:12:00", "按压操作");
 

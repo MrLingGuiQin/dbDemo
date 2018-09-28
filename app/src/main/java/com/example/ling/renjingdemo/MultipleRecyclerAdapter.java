@@ -1,5 +1,7 @@
 package com.example.ling.renjingdemo;
 
+import android.graphics.Color;
+
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.chad.library.adapter.base.entity.MultiItemEntity;
@@ -31,10 +33,16 @@ public class MultipleRecyclerAdapter extends BaseMultiItemQuickAdapter<MultiItem
 
     @Override
     protected void convert(BaseViewHolder helper, MultiItemEntity item) {
+        final int position = helper.getAdapterPosition();
         switch (helper.getItemViewType()) {
             case ItemType.TYPE_TIME:
                 final RecordTime recordTime = (RecordTime) item;
                 helper.setText(R.id.txt_date, recordTime.date);
+                if (position == 0) {
+                    helper.setTextColor(R.id.txt_date, Color.parseColor("#0aaeba"));
+                } else {
+                    helper.setTextColor(R.id.txt_date, Color.parseColor("#3d3d3d"));
+                }
                 break;
 
             case ItemType.TYPE_STEP:

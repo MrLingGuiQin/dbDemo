@@ -76,10 +76,14 @@ public class DBHelper {
                 if (oneDayList != null && oneDayList.size() > 0) {
                     tempList.add(oneDayList);
                 }
+
                 try {
                     iterator.close();
                 } catch (IOException e) {
 
+                }
+                if (callback != null) {
+                    callback.executeCallback(tempList);
                 }
 
                 if (activity == null || activity.isFinishing()) {

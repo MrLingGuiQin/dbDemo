@@ -31,6 +31,21 @@ public class DateUtil {
     }
 
     /**
+     * 取出年月日
+     * 2018-01-01 12:00:00  ---> 2018-01-01
+     *
+     * @param time 2018-01-01 12:00:00
+     * @return 2018-01-01
+     */
+    public static String getYearMonDayString(String time) {
+        if (!TextUtils.isEmpty(time)
+                && time.contains(" ")) {
+            return time.split(" ")[0];
+        }
+        return "";
+    }
+
+    /**
      * 获取当天的时间日期  2018-08-08 08:12:00
      *
      * @return
